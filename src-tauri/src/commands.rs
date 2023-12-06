@@ -10,14 +10,14 @@ use crate::state::ServiceAccess;
 /// * `app_handle`: App instance containing the database connection.
 /// * `account`: The account to add.
 ///
-/// returns: Result<(), ()> Ok if the account was added successfully.
+/// returns: Result<(), String> Ok if the account was added successfully. Err if unsuccessful.
 #[tauri::command]
-pub fn add_account(app_handle: AppHandle, account: Account) -> Result<(), ()> {
-    app_handle
-        .db(|db| database::add_account(&account, db)
-        .expect("Add account should succeed"));
-
-    Ok(())
+pub fn add_account(app_handle: AppHandle, account: Account) -> Result<(), String> {
+    match app_handle
+        .db(|db| database::add_account(&account, db)) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string())
+        }
 }
 
 
@@ -27,14 +27,14 @@ pub fn add_account(app_handle: AppHandle, account: Account) -> Result<(), ()> {
 ///
 /// * `app_handle`: App instance containing the database connection.
 ///
-/// returns: Result<Vec<Account, Global>, ()> List of accounts.
+/// returns: Result<Vec<Account, Global>, String> List of accounts. Err if unsuccessful.
 #[tauri::command]
-pub fn get_accounts(app_handle: AppHandle) -> Result<Vec<Account>, ()> {
-    let accounts = app_handle
-        .db(|db| database::get_accounts(db)
-        .expect("Get accounts should succeed"));
-
-    Ok(accounts)
+pub fn get_accounts(app_handle: AppHandle) -> Result<Vec<Account>, String> {
+    match app_handle
+        .db(|db| database::get_accounts(db)) {
+            Ok(accounts) => Ok(accounts),
+            Err(e) => Err(e.to_string())
+        }
 }
 
 /// Updates an account in the accounts table.
@@ -44,14 +44,14 @@ pub fn get_accounts(app_handle: AppHandle) -> Result<Vec<Account>, ()> {
 /// * `app_handle`: App instance containing the database connection.
 /// * `account`: The account to update and its new values.
 ///
-/// returns: Result<(), ()> Ok if successful.
+/// returns: Result<(), String> Ok if successful. Err if unsuccessful.
 #[tauri::command]
-pub fn update_account(app_handle: AppHandle, account: Account) -> Result<(), ()> {
-    app_handle
-        .db(|db| database::update_account(&account, db)
-        .expect("Update account should succeed"));
-
-    Ok(())
+pub fn update_account(app_handle: AppHandle, account: Account) -> Result<(), String> {
+    match app_handle
+        .db(|db| database::update_account(&account, db)) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string())
+        }
 }
 
 
@@ -62,14 +62,14 @@ pub fn update_account(app_handle: AppHandle, account: Account) -> Result<(), ()>
 /// * `app_handle`: App instance containing the database connection.
 /// * `account_id`: Id of the account to remove.
 ///
-/// returns: Result<(), ()> Ok if successful.
+/// returns: Result<(), ()> Ok if successful. Err if unsuccessful.
 #[tauri::command]
-pub fn remove_account(app_handle: AppHandle, account_id: i32) -> Result<(), ()> {
-    app_handle
-        .db(|db| database::remove_account(account_id, db)
-        .expect("Remove account should succeed"));
-
-    Ok(())
+pub fn remove_account(app_handle: AppHandle, account_id: i32) -> Result<(), String> {
+    match app_handle
+        .db(|db| database::remove_account(account_id, db)) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string())
+        }
 }
 
 /// Adds a transaction to the transactions table.
@@ -79,14 +79,14 @@ pub fn remove_account(app_handle: AppHandle, account_id: i32) -> Result<(), ()> 
 /// * `app_handle`: App instance containing the database connection.
 /// * `transaction`: Transaction to add.
 ///
-/// returns: Result<(), ()> Ok if successful.
+/// returns: Result<(), ()> Ok if successful. Err if unsuccessful.
 #[tauri::command]
-pub fn add_transaction(app_handle: AppHandle, transaction: crate::transactions::Transaction) -> Result<(), ()> {
-    app_handle
-        .db(|db| database::add_transaction(&transaction, db)
-        .expect("Add transaction should succeed"));
-
-    Ok(())
+pub fn add_transaction(app_handle: AppHandle, transaction: crate::transactions::Transaction) -> Result<(), String> {
+    match app_handle
+        .db(|db| database::add_transaction(&transaction, db)) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string())
+        }
 }
 
 /// Gets all transactions from the transactions table for a given account.
@@ -96,14 +96,14 @@ pub fn add_transaction(app_handle: AppHandle, transaction: crate::transactions::
 /// * `app_handle`: App instance containing the database connection.
 /// * `account_id`: Id of the account to get transactions for.
 ///
-/// returns: Result<Vec<Transaction, Global>, ()> List of transactions.
+/// returns: Result<Vec<Transaction, Global>, ()> List of transactions. Err if unsuccessful.
 #[tauri::command]
-pub fn get_transactions(app_handle: AppHandle, account_id: i32) -> Result<Vec<crate::transactions::Transaction>, ()> {
-    let transactions = app_handle
-        .db(|db| database::get_transactions(account_id, db)
-        .expect("Get transactions should succeed"));
-
-    Ok(transactions)
+pub fn get_transactions(app_handle: AppHandle, account_id: i32) -> Result<Vec<crate::transactions::Transaction>, String> {
+    match app_handle
+        .db(|db| database::get_transactions(account_id, db)) {
+            Ok(transactions) => Ok(transactions),
+            Err(e) => Err(e.to_string())
+        }
 }
 
 /// Updates a transaction in the transactions table.
@@ -113,14 +113,14 @@ pub fn get_transactions(app_handle: AppHandle, account_id: i32) -> Result<Vec<cr
 /// * `app_handle`: App instance containing the database connection.
 /// * `transaction`: Transaction to update and its new values.
 ///
-/// returns: Result<(), ()> Ok if successful.
+/// returns: Result<(), ()> Ok if successful. Err if unsuccessful.
 #[tauri::command]
-pub fn update_transaction(app_handle: AppHandle, transaction: crate::transactions::Transaction) -> Result<(), ()> {
-    app_handle
-        .db(|db| database::update_transaction(&transaction, db)
-        .expect("Update transaction should succeed"));
-
-    Ok(())
+pub fn update_transaction(app_handle: AppHandle, transaction: crate::transactions::Transaction) -> Result<(), String> {
+    match app_handle
+        .db(|db| database::update_transaction(&transaction, db)) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string())
+        }
 }
 
 /// Removes a transaction from the transactions table.
@@ -130,12 +130,12 @@ pub fn update_transaction(app_handle: AppHandle, transaction: crate::transaction
 /// * `app_handle`: App instance containing the database connection.
 /// * `transaction_id`: Id of the transaction to remove.
 ///
-/// returns: Result<(), ()> Ok if successful.
+/// returns: Result<(), ()> Ok if successful. Err if unsuccessful.
 #[tauri::command]
-pub fn remove_transaction(app_handle: AppHandle, transaction_id: i32) -> Result<(), ()> {
-    app_handle
-        .db(|db| database::remove_transaction(transaction_id, db)
-        .expect("Remove transaction should succeed"));
-
-    Ok(())
+pub fn remove_transaction(app_handle: AppHandle, transaction_id: i32) -> Result<(), String> {
+    match app_handle
+        .db(|db| database::remove_transaction(transaction_id, db)) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.to_string())
+        }
 }
