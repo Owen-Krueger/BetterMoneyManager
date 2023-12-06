@@ -1,35 +1,9 @@
 ﻿@page "/"
-@using BetterMoneyManager.Models
-@inject IJSRuntime JsRuntime
 
-<PageTitle>Home</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<p>Test: @test</p>
+<div class="h-screen bg-slate-900 font-sans">
+    <AccountSelectPage />
+</div>
 
 @code {
 
-    private string test = string.Empty;
-
-    protected override async Task OnInitializedAsync()
-    {
-        //test = await JsRuntime.InvokeAsync<string>("my_custom_command", "Hello from the C# code");
-
-        // await JsRuntime.InvokeVoidAsync("add_account", new Account
-        // {
-        //     Id = 1,
-        //     Name = "Test Account",
-        //     BankName = "My Bank",
-        //     AccountType = 0,
-        //     Balance = 150.30m,
-        //     AvailableBalance = 555.99m,
-        //     DateCreated = DateTime.Now,
-        // });
-
-        var accounts = await JsRuntime.InvokeAsync<List<Account>>("get_accounts");
-        Console.WriteLine(accounts.Count);
-    }
 }

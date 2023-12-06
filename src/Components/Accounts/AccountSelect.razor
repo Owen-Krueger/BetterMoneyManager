@@ -1,0 +1,16 @@
+﻿<div class="block rounded-lg bg-slate-800 hover:bg-slate-700 p-6 w-52 h-52 cursor-pointer ring-1 ring-slate-900/5 shadow-xl hover:scale-110">
+    <div class="rounded-full w-16 h-16 bg-blue-700 m-auto flex justify-center items-center mb-8">
+        <h1 class="text-center text-neutral-50 text-2xl font-bold">@Account.Name[0]</h1>
+    </div>
+    <h5 class="mb-2 text-xl font-medium text-center text-neutral-50 font-bold line-clamp-1">
+        @Account.Name
+    </h5>
+    <p class="text-neutral-400 text-center line-clamp-1">@Account.BankName</p>
+</div>
+
+@code {
+
+    [Parameter]
+    public Account Account { get; set; } = new();
+
+}
