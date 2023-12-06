@@ -2,6 +2,7 @@ use rusqlite::{Connection, named_params};
 use tauri::AppHandle;
 use std::fs;
 use crate::accounts::Account;
+use crate::transactions::Transaction;
 
 const CURRENT_DB_VERSION: u32 = 1;
 
@@ -52,6 +53,7 @@ pub fn upgrade_database_if_needed(db: &mut Connection, existing_version: u32) ->
                 CREATE TABLE IF NOT EXISTS transactions
                 (
                     id                  INTEGER PRIMARY KEY NOT NULL,
+                    account_id          INTEGER             NOT NULL,
                     payee               VARCHAR(40)         NOT NULL,
                     amount              NUMERIC             NOT NULL,
                     date                DATE                NOT NULL,
@@ -141,6 +143,126 @@ pub fn update_account(account: &Account, db: &Connection) -> Result<(), rusqlite
         "@available_balance": account.available_balance,
         "@favorite": account.favorite,
         "@date_created": account.date_created
+    })?;
+
+    Ok(())
+}
+
+pub fn remove_account(account_id: i32, db: &Connection) -> Result<(), rusqlite::Error> {
+
+    let mut statement = db.prepare(
+        "
+            DELETE FROM accounts
+            WHERE id = @id
+        "
+    )?;
+
+    statement.execute(named_params! {
+        "@id": account_id
+    })?;
+
+    statement = db.prepare(
+        "
+            DELETE FROM transactions
+            WHERE account_id = @account_id
+        "
+    )?;
+
+    statement.execute(named_params! {
+        "@account_id": account_id
+    })?;
+
+    Ok(())
+}
+
+pub fn add_transaction(transaction: &Transaction, db: &Connection) -> Result<(), rusqlite::Error> {
+    let mut statement = db.prepare(
+        "
+            INSERT INTO transactions (account_id, payee, amount, date, number, category, memo)
+            VALUES (@account_id, @payee, @amount, @date, @number, @category, @memo)
+        "
+    ).unwrap();
+
+    statement.execute(named_params! {
+        "@account_id": transaction.account_id,
+        "@payee": transaction.payee,
+        "@amount": transaction.amount,
+        "@date": transaction.date,
+        "@number": transaction.number,
+        "@category": transaction.category,
+        "@memo": transaction.memo
+    }).unwrap();
+
+    Ok(())
+}
+
+pub fn get_transactions(account_id: i32, db: &Connection) -> Result<Vec<Transaction>, rusqlite::Error> {
+    let mut statement = db.prepare(
+        "
+            SELECT id, account_id, payee, amount, date, number, category, memo
+            FROM transactions
+            WHERE account_id = @account_id
+        "
+    ).unwrap();
+
+    let transactions = statement.query_map(named_params! {
+        "@account_id": account_id
+    }, |row| {
+        Ok(Transaction {
+            id: row.get(0).unwrap(),
+            account_id: row.get(1).unwrap(),
+            payee: row.get(2).unwrap(),
+            amount: row.get(3).unwrap(),
+            date: row.get(4).unwrap(),
+            number: row.get(5).unwrap(),
+            category: row.get(6).unwrap(),
+            memo: row.get(7).unwrap()
+        })
+    }).unwrap();
+
+    let mut transactions_vec = Vec::new();
+
+    for transaction in transactions {
+        transactions_vec.push(transaction.unwrap());
+    }
+
+    Ok(transactions_vec)
+}
+
+pub fn update_transaction(transaction: &Transaction, db: &Connection) -> Result<(), rusqlite::Error> {
+    let mut statement = db.prepare(
+        "
+            UPDATE transactions
+            SET account_id = @account_id, payee = @payee, amount = @amount, date = @date,
+                number = @number, category = @category, memo = @memo
+            WHERE id = @id
+        "
+    )?;
+
+    statement.execute(named_params! {
+        "@id": transaction.id,
+        "@account_id": transaction.account_id,
+        "@payee": transaction.payee,
+        "@amount": transaction.amount,
+        "@date": transaction.date,
+        "@number": transaction.number,
+        "@category": transaction.category,
+        "@memo": transaction.memo
+    })?;
+
+    Ok(())
+}
+
+pub fn remove_transaction(id: i32, db: &Connection) -> Result<(), rusqlite::Error> {
+    let mut statement = db.prepare(
+        "
+            DELETE FROM transactions
+            WHERE id = @id
+        "
+    )?;
+
+    statement.execute(named_params! {
+        "@id": id
     })?;
 
     Ok(())

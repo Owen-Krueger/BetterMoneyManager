@@ -6,6 +6,7 @@ mod commands;
 mod database;
 mod state;
 mod accounts;
+mod transactions;
 
 use state::{AppState};
 use tauri::{State, Manager};
@@ -17,7 +18,12 @@ fn main() {
       .invoke_handler(tauri::generate_handler![
           commands::add_account,
           commands::get_accounts,
-          commands::update_account
+          commands::update_account,
+          commands::remove_account,
+          commands::add_transaction,
+          commands::get_transactions,
+          commands::update_transaction,
+          commands::remove_transaction
       ])
       .setup(|app| {
           let handle = app.handle();
