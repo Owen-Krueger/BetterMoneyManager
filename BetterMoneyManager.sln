@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{843F555F-FF16-4004-9A5A-3F2F11267E6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src-tauri", "src-tauri", "{8EB14E95-09BE-485E-B2D2-DAF41D7A22AC}"
+	ProjectSection(SolutionItems) = preProject
+		src-tauri\.gitignore = src-tauri\.gitignore
+		src-tauri\build.rs = src-tauri\build.rs
+		src-tauri\Cargo.toml = src-tauri\Cargo.toml
+		src-tauri\tauri.conf.json = src-tauri\tauri.conf.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BetterMoneyManager", "src\BetterMoneyManager.csproj", "{3A0EACDF-37CD-4403-8769-695A77DBA9D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5A5C6711-199F-4C78-B73C-7115287640EE}"
+	ProjectSection(SolutionItems) = preProject
+		src-tauri\src\main.rs = src-tauri\src\main.rs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "icons", "icons", "{807CACD8-1B6B-4C6F-A8B6-707864D9E348}"
+	ProjectSection(SolutionItems) = preProject
+		src-tauri\icons\32x32.png = src-tauri\icons\32x32.png
+		src-tauri\icons\128x128.png = src-tauri\icons\128x128.png
+		src-tauri\icons\128x128@2x.png = src-tauri\icons\128x128@2x.png
+		src-tauri\icons\icon.icns = src-tauri\icons\icon.icns
+		src-tauri\icons\icon.ico = src-tauri\icons\icon.ico
+		src-tauri\icons\icon.png = src-tauri\icons\icon.png
+		src-tauri\icons\Square30x30Logo.png = src-tauri\icons\Square30x30Logo.png
+		src-tauri\icons\Square44x44Logo.png = src-tauri\icons\Square44x44Logo.png
+		src-tauri\icons\Square71x71Logo.png = src-tauri\icons\Square71x71Logo.png
+		src-tauri\icons\Square89x89Logo.png = src-tauri\icons\Square89x89Logo.png
+		src-tauri\icons\Square107x107Logo.png = src-tauri\icons\Square107x107Logo.png
+		src-tauri\icons\Square142x142Logo.png = src-tauri\icons\Square142x142Logo.png
+		src-tauri\icons\Square150x150Logo.png = src-tauri\icons\Square150x150Logo.png
+		src-tauri\icons\Square284x284Logo.png = src-tauri\icons\Square284x284Logo.png
+		src-tauri\icons\Square310x310Logo.png = src-tauri\icons\Square310x310Logo.png
+		src-tauri\icons\StoreLogo.png = src-tauri\icons\StoreLogo.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{FCB724D7-FDE8-480D-9114-D92380093B33}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A0EACDF-37CD-4403-8769-695A77DBA9D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A0EACDF-37CD-4403-8769-695A77DBA9D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A0EACDF-37CD-4403-8769-695A77DBA9D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A0EACDF-37CD-4403-8769-695A77DBA9D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {847F7FFF-A1FC-427F-BF9E-9653D6E0A391}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3A0EACDF-37CD-4403-8769-695A77DBA9D1} = {843F555F-FF16-4004-9A5A-3F2F11267E6A}
+		{5A5C6711-199F-4C78-B73C-7115287640EE} = {8EB14E95-09BE-485E-B2D2-DAF41D7A22AC}
+		{807CACD8-1B6B-4C6F-A8B6-707864D9E348} = {8EB14E95-09BE-485E-B2D2-DAF41D7A22AC}
+	EndGlobalSection
+EndGlobal

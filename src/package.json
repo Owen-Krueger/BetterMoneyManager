@@ -1,0 +1,11 @@
+﻿{
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  },
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./wwwroot/css/input.css -o ./wwwroot/css/app.css"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

@@ -1,0 +1,15 @@
+# Top Level
+.idea/
+
+# Tauri
+src-tauri/target
+
+# C# Blazor
+bin/
+obj
+*.user
+*.css.map
+src/wwwroot/css/app.css
+
+# Tailwind
+node_modules/
