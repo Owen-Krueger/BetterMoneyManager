@@ -6,8 +6,13 @@ use crate::transactions::Transaction;
 
 const CURRENT_DB_VERSION: u32 = 1;
 
-/// Initializes the database connection, creating the .sqlite file if needed, and upgrading the database
-/// if it's out of date.
+/// Sets up the database connection and returns it.
+///
+/// # Arguments
+///
+/// * `app_handle`: App instance.
+///
+/// returns: Result<Connection, Error> The database connection.
 pub fn initialize_database(app_handle: &AppHandle) -> Result<Connection, rusqlite::Error> {
     let app_dir = app_handle.path_resolver().app_data_dir().expect("The app data directory should exist.");
 
@@ -27,7 +32,14 @@ pub fn initialize_database(app_handle: &AppHandle) -> Result<Connection, rusqlit
     Ok(db)
 }
 
-/// Upgrades the database to the current version.
+/// Upgrades the database and sets up tables if needed.
+///
+/// # Arguments
+///
+/// * `db`: Database connection.
+/// * `existing_version`: Version of the database.
+///
+/// returns: Result<(), Error> Ok if successful.
 pub fn upgrade_database_if_needed(db: &mut Connection, existing_version: u32) -> Result<(), rusqlite::Error> {
     if existing_version < CURRENT_DB_VERSION {
         db.pragma_update(None, "journal_mode", "WAL")?;
@@ -70,6 +82,14 @@ pub fn upgrade_database_if_needed(db: &mut Connection, existing_version: u32) ->
     Ok(())
 }
 
+/// Adds an account to the accounts table.
+///
+/// # Arguments
+///
+/// * `account`: Account to add.
+/// * `db`: Database connection.
+///
+/// returns: Result<(), Error> Ok if successful.
 pub fn add_account(account: &Account, db: &Connection) -> Result<(), rusqlite::Error> {
     let mut statement = db.prepare(
         "
@@ -93,6 +113,14 @@ pub fn add_account(account: &Account, db: &Connection) -> Result<(), rusqlite::E
     Ok(())
 }
 
+
+/// Gets all accounts from the accounts table.
+///
+/// # Arguments
+///
+/// * `db`: Database connection.
+///
+/// returns: Result<Vec<Account, Global>, Error> List of accounts.
 pub fn get_accounts(db: &Connection) -> Result<Vec<Account>, rusqlite::Error> {
     let mut statement = db.prepare(
         "
@@ -123,6 +151,15 @@ pub fn get_accounts(db: &Connection) -> Result<Vec<Account>, rusqlite::Error> {
     Ok(accounts_vec)
 }
 
+
+/// Updates an account in the accounts table.
+///
+/// # Arguments
+///
+/// * `account`: Account to update and its new values.
+/// * `db`: Database connection.
+///
+/// returns: Result<(), Error> Ok if successful.
 pub fn update_account(account: &Account, db: &Connection) -> Result<(), rusqlite::Error> {
     let mut statement = db.prepare(
         "
@@ -148,6 +185,14 @@ pub fn update_account(account: &Account, db: &Connection) -> Result<(), rusqlite
     Ok(())
 }
 
+/// Removes an account from the accounts table.
+///
+/// # Arguments
+///
+/// * `account_id`: Id of the account to remove.
+/// * `db`: Database connection.
+///
+/// returns: Result<(), Error> Ok if successful.
 pub fn remove_account(account_id: i32, db: &Connection) -> Result<(), rusqlite::Error> {
 
     let mut statement = db.prepare(
@@ -175,6 +220,14 @@ pub fn remove_account(account_id: i32, db: &Connection) -> Result<(), rusqlite::
     Ok(())
 }
 
+/// Adds a transaction to the transactions table.
+///
+/// # Arguments
+///
+/// * `transaction`: Transaction to add.
+/// * `db`: Database connection.
+///
+/// returns: Result<(), Error> Ok if successful.
 pub fn add_transaction(transaction: &Transaction, db: &Connection) -> Result<(), rusqlite::Error> {
     let mut statement = db.prepare(
         "
@@ -196,6 +249,15 @@ pub fn add_transaction(transaction: &Transaction, db: &Connection) -> Result<(),
     Ok(())
 }
 
+
+/// Gets all transactions from the transactions table for a given account.
+///
+/// # Arguments
+///
+/// * `account_id`: Id of the account to get transactions for.
+/// * `db`: Database connection.
+///
+/// returns: Result<Vec<Transaction, Global>, Error> List of transactions.
 pub fn get_transactions(account_id: i32, db: &Connection) -> Result<Vec<Transaction>, rusqlite::Error> {
     let mut statement = db.prepare(
         "
@@ -229,6 +291,14 @@ pub fn get_transactions(account_id: i32, db: &Connection) -> Result<Vec<Transact
     Ok(transactions_vec)
 }
 
+/// Updates a transaction in the transactions table.
+///
+/// # Arguments
+///
+/// * `transaction`: Transaction to update and its new values.
+/// * `db`: Database connection.
+///
+/// returns: Result<(), Error> Ok if successful.
 pub fn update_transaction(transaction: &Transaction, db: &Connection) -> Result<(), rusqlite::Error> {
     let mut statement = db.prepare(
         "
@@ -253,6 +323,15 @@ pub fn update_transaction(transaction: &Transaction, db: &Connection) -> Result<
     Ok(())
 }
 
+
+/// Removes a transaction from the transactions table.
+///
+/// # Arguments
+///
+/// * `id`: Id of the transaction to remove.
+/// * `db`: Database connection.
+///
+/// returns: Result<(), Error> Ok if successful.
 pub fn remove_transaction(id: i32, db: &Connection) -> Result<(), rusqlite::Error> {
     let mut statement = db.prepare(
         "
