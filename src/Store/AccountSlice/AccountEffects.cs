@@ -1,4 +1,5 @@
 ﻿using BetterMoneyManager.Models;
+using BetterMoneyManager.Store.AppSlice;
 using Fluxor;
 using Microsoft.JSInterop;
 
@@ -14,7 +15,7 @@ public class AccountEffects(IJSRuntime jsRuntime)
     /// </summary>
     /// <param name="action">Action containing the account to add.</param>
     [EffectMethod]
-    public async Task OnAddAccount(AddAccountAction action)
+    public async Task OnAddAccount(AddAccountAction action, IDispatcher dispatcher)
     {
         await jsRuntime.InvokeVoidAsync("add_account", action.Account);
     }
@@ -28,5 +29,13 @@ public class AccountEffects(IJSRuntime jsRuntime)
     {
         var accounts = await jsRuntime.InvokeAsync<List<Account>>("get_accounts");
         dispatcher.Dispatch(new GetAccountsSucceededAction(accounts));
+    }
+
+    [EffectMethod]
+    public async Task OnUpdateAccount(UpdateAccountAction action, IDispatcher dispatcher)
+    {
+        await jsRuntime.InvokeVoidAsync("update_account", action.Account);
+        dispatcher.Dispatch(new GetAccountsRequestedAction());
+        dispatcher.Dispatch(new SelectPageAction(SelectedPage.AccountSelect));
     }
 }

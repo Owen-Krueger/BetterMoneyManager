@@ -30,4 +30,10 @@ public class AccountReducers
     {
         return state with { IsLoading = false, Accounts = action.Accounts.ToList() };
     }
+
+    [ReducerMethod]
+    public static AccountState OnEditAccountRequested(AccountState state, EditAccountRequestedAction action)
+    {
+        return state with { SelectedAccount = action.Account };
+    }
 }

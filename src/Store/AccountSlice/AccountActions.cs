@@ -18,3 +18,7 @@ public record GetAccountsRequestedAction;
 /// </summary>
 /// <param name="Accounts">Accounts from the database.</param>
 public record GetAccountsSucceededAction(IEnumerable<Account> Accounts);
+
+public record EditAccountRequestedAction(Account Account);
+
+public record UpdateAccountAction(Account Account);

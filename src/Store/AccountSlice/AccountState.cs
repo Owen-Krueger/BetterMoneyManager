@@ -18,4 +18,6 @@ public record AccountState
     /// A list of accounts.
     /// </summary>
     public List<Account> Accounts { get; init; } = new();
+
+    public Account SelectedAccount { get; set; } = new();
 }

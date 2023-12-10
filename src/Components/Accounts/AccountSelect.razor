@@ -1,4 +1,8 @@
-﻿<div class="block rounded-lg bg-slate-800 hover:bg-slate-700 p-6 w-52 h-52 cursor-pointer ring-1 ring-slate-900/5 shadow-xl hover:scale-110">
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent;
+@inject IDispatcher Dispatcher;
+
+<div class="block rounded-lg bg-slate-800 hover:bg-slate-700 p-6 w-52 h-52 cursor-pointer ring-1 ring-slate-900/5 shadow-xl hover:scale-110"
+     @onclick="() => Dispatcher.Dispatch(new EditAccountRequestedAction(Account))">
     <div class="rounded-full w-16 h-16 bg-blue-700 m-auto flex justify-center items-center mb-8">
         <h1 class="text-center text-neutral-50 text-2xl font-bold">@Account.Name[0]</h1>
     </div>
