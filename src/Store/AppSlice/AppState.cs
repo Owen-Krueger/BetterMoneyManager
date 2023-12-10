@@ -3,8 +3,14 @@ using Fluxor;
 
 namespace BetterMoneyManager.Store.AppSlice;
 
+/// <summary>
+/// The state for the app feature.
+/// </summary>
 [FeatureState]
 public record AppState
 {
-    public SelectedPage SelectedPage { get; set; } = SelectedPage.AccountSelect;
+    /// <summary>
+    /// The selected page to view.
+    /// </summary>
+    public SelectedPage SelectedPage { get; init; } = SelectedPage.AccountSelect;
 }

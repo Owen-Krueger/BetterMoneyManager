@@ -19,5 +19,8 @@ public record AccountState
     /// </summary>
     public List<Account> Accounts { get; init; } = new();
 
-    public Account SelectedAccount { get; set; } = new();
+    /// <summary>
+    /// The selected account to view or edit.
+    /// </summary>
+    public Account SelectedAccount { get; init; } = new();
 }
