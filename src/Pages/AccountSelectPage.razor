@@ -1,23 +1,31 @@
-﻿<div class="grid place-items-center h-screen">
-    <div>
-        <h1 class="text-center text-neutral-50 text-4xl font-bold mb-12">Select Account</h1>
-        <div class="flex gap-8">
-            @foreach (var account in Accounts)
-            {
-                <AccountSelect Account="@account" />
-            }
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent;
+@inject IState<AccountState> AccountState;
+@inject IDispatcher Dispatcher;
+
+<div class="grid place-items-center h-screen">
+    @if (AccountState.Value.IsLoading)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <div>
+            <h1 class="text-center text-neutral-50 text-4xl font-bold mb-12">Select Account</h1>
+            <div class="flex gap-8">
+                @foreach (var account in AccountState.Value.Accounts)
+                {
+                    <AccountSelect Account="@account"/>
+                }
+            </div>
         </div>
-    </div>
+    }
 </div>
 
 @code {
-    private List<Account> Accounts { get; set; } = new();
 
     protected override void OnInitialized()
     {
-        Accounts = new List<Account>
-        {
-            new() { Name = "Account Name", BankName = "Bank Name" }
-        };
+        base.OnInitialized();
+        Dispatcher.Dispatch(new GetAccountsRequestedAction());
     }
 }

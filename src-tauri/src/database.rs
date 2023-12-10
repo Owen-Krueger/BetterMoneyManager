@@ -59,7 +59,7 @@ pub fn upgrade_database_if_needed(db: &mut Connection, existing_version: u32) ->
                     balance             NUMERIC             NOT NULL,
                     available_balance   NUMERIC             NOT NULL,
                     favorite            BOOLEAN             NOT NULL,
-                    date_created        DATE                NOT NULL
+                    date_created        TEXT                NOT NULL
                 );
 
                 CREATE TABLE IF NOT EXISTS transactions
@@ -68,7 +68,7 @@ pub fn upgrade_database_if_needed(db: &mut Connection, existing_version: u32) ->
                     account_id          INTEGER             NOT NULL,
                     payee               VARCHAR(40)         NOT NULL,
                     amount              NUMERIC             NOT NULL,
-                    date                DATE                NOT NULL,
+                    date                TEXT                NOT NULL,
                     number              INTEGER,
                     category            VARCHAR(20),
                     memo                VARCHAR(255)
