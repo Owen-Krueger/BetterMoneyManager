@@ -1,14 +1,4 @@
 ﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent;
 @inject IState<AccountState> AccountState;
-@inject IDispatcher Dispatcher;
 
-<EditForm Model="Account" OnSubmit="@SaveAccount">
-    <InputText @bind-Value="Account.Name" />
-    <button type="submit">Save</button>
-</EditForm>
-
-@code {
-    public Account Account => AccountState.Value.SelectedAccount;
-
-    public void SaveAccount() => Dispatcher.Dispatch(new UpdateAccountAction(Account));
-}
+<AccountModify Account="@AccountState.Value.SelectedAccount"/>

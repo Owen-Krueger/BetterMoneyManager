@@ -2,7 +2,7 @@
 @inherits Fluxor.Blazor.Web.Components.FluxorComponent;
 @inject IState<AppState> AppState;
 
-<div class="h-screen bg-slate-900 font-sans">
+<div class="h-screen">
     @(AppState.Value.SelectedPage switch {
         SelectedPage.Home => (@<p>Hey</p>),
         SelectedPage.AccountSelect => (@<AccountSelectPage />),

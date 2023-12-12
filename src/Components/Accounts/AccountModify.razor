@@ -1,0 +1,103 @@
+﻿@inject IDispatcher Dispatcher;
+
+<h1 class="mx-auto text-center text-3xl font-bold my-8">@SubmitText Account</h1>
+<EditForm
+    Model="Account"
+    OnValidSubmit="@SaveAccount">
+    <div class="w-full max-w-md flex flex-col gap-2 justify-center mx-auto">
+        <div class="w-full px-3 mb-6 mx-auto">
+            <label
+                class="block uppercase tracking-wide text-s font-bold mb-2"
+                for="Name">
+                Name
+            </label>
+            <ValidationMessage For="@(() => Account.Name)" />
+            <InputText
+                id="Name"
+                class="block w-full text-slate-900 bg-neutral-50 p-1 rounded-md focus:bg-white"
+                @bind-Value="Account.Name"/>
+        </div>
+        <div class="w-full px-3 mb-6 mx-auto">
+            <label
+                class="block uppercase tracking-wide text-s font-bold mb-2"
+                for="BankName">
+                Bank Name
+            </label>
+            @* <ValidationMessage For="@(() => Account.BankName)" /> *@
+            <InputText
+                id="BankName"
+                class="block w-full text-slate-900 bg-neutral-50 p-1 rounded-md focus:bg-white"
+                @bind-Value="Account.BankName"/>
+        </div>
+        <div class="w-full px-3 mb-6 mx-auto">
+            <label
+                class="block uppercase tracking-wide text-s font-bold mb-2"
+                for="AccountType">
+                Account Type
+            </label>
+            @* <ValidationMessage For="@(() => Account.BankName)" /> *@
+            <InputSelect
+                id="AccountType"
+                class="block w-full text-slate-900 bg-neutral-50 p-1 rounded-md focus:bg-white"
+                @bind-Value="Account.AccountType">
+                @foreach (var type in Enum.GetValues(typeof(AccountType)))
+                {
+                    <option value="@type">@type</option>
+                }
+            </InputSelect>
+        </div>
+        <div class="flex">
+            <div class="w-full px-3 mb-6 mx-auto">
+                <label
+                    class="block uppercase tracking-wide text-s font-bold mb-2"
+                    for="Balance">
+                    Balance
+                </label>
+                @* <ValidationMessage For="@(() => Account.BankName)" /> *@
+                <InputNumber
+                    id="Balance"
+                    class="block w-full text-slate-900 bg-neutral-50 p-1 rounded-md focus:bg-white"
+                    @bind-Value="Account.Balance"/>
+            </div>
+            <div class="w-full px-3 mb-6 mx-auto">
+                <label
+                    class="block uppercase tracking-wide text-s font-bold mb-2"
+                    for="AvailableBalance">
+                    Available Balance
+                </label>
+                @* <ValidationMessage For="@(() => Account.BankName)" /> *@
+                <InputNumber
+                    id="AvailableBalance"
+                    class="block w-full text-slate-900 bg-neutral-50 p-1 rounded-md focus:bg-white"
+                    @bind-Value="Account.AvailableBalance"/>
+            </div>
+        </div>
+        <div class="w-full md:w-1/2 px-3 mb-6">
+            <InputCheckbox
+                id="Favorite"
+                @bind-Value="Account.Favorite" />
+            <label
+                class="text-s font-bold ml-2"
+                for="Favorite">
+                Favorite
+            </label>
+        </div>
+        <button
+            type="submit"
+            class="mx-auto tracking-wide text-md font-bold bg-neutral-50 rounded-md text-slate-900 p-4">
+            @SubmitText
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Account Account { get; set; } = new();
+
+    [Parameter]
+    public bool IsNew { get; set; }
+
+    private string SubmitText => IsNew ? "Add" : "Update";
+
+    public void SaveAccount() => Dispatcher.Dispatch(IsNew ? new AddAccountAction(Account) : new UpdateAccountAction(Account));
+}
