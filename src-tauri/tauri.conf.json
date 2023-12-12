@@ -56,10 +56,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 800,
         "resizable": true,
         "title": "Better Money Manager",
-        "width": 800
+        "width": 1000,
+        "minHeight": 650,
+        "minWidth": 800
       }
     ]
   }
