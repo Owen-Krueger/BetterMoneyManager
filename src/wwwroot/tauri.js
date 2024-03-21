@@ -1,5 +1,4 @@
-﻿const app=window.__TAURI__.app;
-const invoke = window.__TAURI__.invoke;
+﻿import { invoke } from "@tauri-apps/api/core";
 
 /**
  * Adds a new account to the database.

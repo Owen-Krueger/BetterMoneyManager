@@ -1,5 +1,5 @@
 use rusqlite::{Connection, named_params};
-use tauri::AppHandle;
+use tauri::{AppHandle, Manager};
 use std::fs;
 use crate::accounts::Account;
 use crate::transactions::Transaction;
@@ -14,7 +14,7 @@ const CURRENT_DB_VERSION: u32 = 1;
 ///
 /// returns: Result<Connection, Error> The database connection.
 pub fn initialize_database(app_handle: &AppHandle) -> Result<Connection, rusqlite::Error> {
-    let app_dir = app_handle.path_resolver().app_data_dir().expect("The app data directory should exist.");
+    let app_dir = app_handle.path().app_data_dir().expect("The app data directory should exist.");
 
     println!("App data directory: {:?}", app_dir);
 

@@ -3,6 +3,8 @@
 
 # Tauri
 src-tauri/target
+src-tauri/gen
+dist
 
 # C# Blazor
 bin/
